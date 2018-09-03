@@ -1,6 +1,6 @@
 FROM alpine:3.8
 
-LABEL maintainer="laurent.paumier@fnac.net"
+LABEL maintainer="schaturvedi@gmail.com"
 
 ENV NUT_VERSION 2.7.4
 
