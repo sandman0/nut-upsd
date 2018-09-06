@@ -10,6 +10,8 @@ then
    ADMIN_PASSWORD=$(dd if=/dev/urandom bs=18 count=1 2>/dev/null | base64)
 fi
 
+UPS_PORT=`ls -d /dev/bus/usb/001/* | tail -1`
+
 cat >/etc/nut/ups.conf <<EOF
 [$UPS_NAME]
 	desc = "$UPS_DESC"
@@ -39,9 +41,11 @@ SHUTDOWNCMD "$SHUTDOWN_CMD"
 EOF
 
 #chgrp -R nut /etc/nut /dev/bus/usb
+chgrp -R nut /dev/bus/usb
 chgrp -R nut /etc/nut
 chmod -R o-rwx /etc/nut
 
+#while true; do sleep 5; done
 /usr/sbin/upsdrvctl start
 /usr/sbin/upsd
 exec /usr/sbin/upsmon -D
